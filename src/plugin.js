@@ -118,6 +118,8 @@ class PlaylistMenuItem extends Component {
     this.on(['click', 'tap'], this.switchPlaylistItem_);
     this.on('keydown', this.handleKeyDown_);
 
+    this.on(['focus', 'mouseover'], this.addPlayIcon_);
+    this.on(['blur', 'mouseout'], this.removePlayIcon_);
   }
 
   handleKeyDown_(event) {
@@ -134,6 +136,22 @@ class PlaylistMenuItem extends Component {
       this.player_.play();
     }
     this.player_.trigger('currentitem_changed');
+  }
+
+  addPlayIcon_() {
+    dom.addClass(this.thumbnail, 'vjs-icon-play');
+    dom.removeClass(this.thumbnail, 'vjs-playlist-now-playing');
+  }
+
+  removePlayIcon_() {
+    if (document.activeElement === this.el()) {
+      return;
+    }
+
+    dom.removeClass(this.thumbnail, 'vjs-icon-play');
+    if (this.hasClass('vjs-selected')) {
+      dom.addClass(this.thumbnail, 'vjs-playlist-now-playing');
+    }
   }
 
   createEl() {
