@@ -315,6 +315,8 @@ class PlaylistMenu extends Component {
 
     if (this.items.length && selectedIndex < this.items.length - 1) {
       upNext(this.items[selectedIndex + 1]);
+    } else if (this.items.length && selectedIndex == this.items.length - 1) {
+      upNext(this.items[0]);
     }
   }
 
