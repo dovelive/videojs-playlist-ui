@@ -133,6 +133,7 @@ class PlaylistMenuItem extends Component {
     if (this.playOnSelect) {
       this.player_.play();
     }
+    this.trigger('currentitem_changed');
   }
 
   createEl() {
