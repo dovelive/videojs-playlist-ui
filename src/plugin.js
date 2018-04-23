@@ -294,6 +294,10 @@ class PlaylistMenu extends Component {
         dom.addClass(thumbnail, 'vjs-playlist-now-playing');
       }
     }
+
+    if (this.items.length && selectedIndex < this.items.length - 1) {
+      upNext(this.items[selectedIndex + 1]);
+    }
   }
 
   update() {
