@@ -1,3 +1,67 @@
+<a name="3.5.2"></a>
+## [3.5.2](https://github.com/brightcove/videojs-playlist-ui/compare/v3.5.1...v3.5.2) (2018-10-03)
+
+### Bug Fixes
+
+* Remove the playlist UI when the player is disposed. ([#81](https://github.com/brightcove/videojs-playlist-ui/issues/81)) ([c519585](https://github.com/brightcove/videojs-playlist-ui/commit/c519585))
+* Remove the postinstall script to prevent install issues ([#76](https://github.com/brightcove/videojs-playlist-ui/issues/76)) ([fbe09e2](https://github.com/brightcove/videojs-playlist-ui/commit/fbe09e2))
+
+### Chores
+
+* update to generator-videojs-plugin[@7](https://github.com/7).2.0 ([0235fee](https://github.com/brightcove/videojs-playlist-ui/commit/0235fee))
+* **package:** update rollup to version 0.66.0 ([#79](https://github.com/brightcove/videojs-playlist-ui/issues/79)) ([dc86980](https://github.com/brightcove/videojs-playlist-ui/commit/dc86980))
+
+<a name="3.5.1"></a>
+## [3.5.1](https://github.com/brightcove/videojs-playlist-ui/compare/v3.5.0...v3.5.1) (2018-08-23)
+
+### Chores
+
+* generator v7 ([#72](https://github.com/brightcove/videojs-playlist-ui/issues/72)) ([c8cb58d](https://github.com/brightcove/videojs-playlist-ui/commit/c8cb58d))
+
+<a name="3.5.0"></a>
+# [3.5.0](https://github.com/brightcove/videojs-playlist-ui/compare/v3.4.2...v3.5.0) (2018-08-20)
+
+### Features
+
+* set dataset attributes on playlist items when they have a data object ([#68](https://github.com/brightcove/videojs-playlist-ui/issues/68)) ([e16f2dd](https://github.com/brightcove/videojs-playlist-ui/commit/e16f2dd))
+
+<a name="3.4.2"></a>
+## [3.4.2](https://github.com/brightcove/videojs-playlist-ui/compare/v3.4.1...v3.4.2) (2018-08-03)
+
+### Bug Fixes
+
+* babel the es dist, by updating the generator ([#65](https://github.com/brightcove/videojs-playlist-ui/issues/65)) ([f63f77b](https://github.com/brightcove/videojs-playlist-ui/commit/f63f77b))
+
+### Chores
+
+* **package:** update dependencies, enable greenkeeper ([#62](https://github.com/brightcove/videojs-playlist-ui/issues/62)) ([63a89a7](https://github.com/brightcove/videojs-playlist-ui/commit/63a89a7))
+
+<a name="3.4.1"></a>
+## [3.4.1](https://github.com/brightcove/videojs-playlist-ui/compare/v3.0.7...v3.4.1) (2018-07-20)
+
+### Bug Fixes
+
+* css builds ([#63](https://github.com/brightcove/videojs-playlist-ui/issues/63)) ([603ec73](https://github.com/brightcove/videojs-playlist-ui/commit/603ec73))
+
+### Reverts
+
+* unintended pkg changes ([#64](https://github.com/brightcove/videojs-playlist-ui/issues/64)) ([be83683](https://github.com/brightcove/videojs-playlist-ui/commit/be83683))
+
+<a name="3.0.8"></a>
+## [3.0.8](https://github.com/brightcove/videojs-playlist-ui/compare/v3.0.6...v3.0.8) (2018-07-20)
+
+### Bug Fixes
+
+* update rollup to fix test build ([d329710](https://github.com/brightcove/videojs-playlist-ui/commit/d329710))
+* revert: generator update from 3.0.7
+
+<a name="3.0.7"></a>
+## [3.0.7](https://github.com/brightcove/videojs-playlist-ui/compare/v3.4.0...v3.0.7) (2018-07-05)
+
+### Chores
+
+* generator v6 ([#58](https://github.com/brightcove/videojs-playlist-ui/issues/58)) ([e9c2b00](https://github.com/brightcove/videojs-playlist-ui/commit/e9c2b00))
+
 <a name="3.4.0"></a>
 # [3.4.0](https://github.com/brightcove/videojs-playlist-ui/compare/v3.3.0...v3.4.0) (2018-03-29)
 
