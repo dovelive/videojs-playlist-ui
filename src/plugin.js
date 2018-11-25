@@ -130,6 +130,19 @@ class PlaylistMenuItem extends Component {
   }
 
   switchPlaylistItem_(event) {
+    let player_ = this.player_;
+    // on iOS player_.play function should be called at first munually, if the player hasn't still started.
+    if (this.playOnSelect && videojs.browser.IS_IOS && !player_.hasStarted()) {
+      var playPromise = player_.play();
+      if (playPromise !== undefined) {
+        playPromise.then(_ => {
+          player_.pause();
+        })
+        .catch(error => {
+        });
+      }
+    }
+
     this.player_.playlist.currentItem(indexOf(this.player_.playlist(), this.item));
     if (this.playOnSelect) {
       this.player_.play();
