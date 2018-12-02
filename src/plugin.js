@@ -130,11 +130,17 @@ class PlaylistMenuItem extends Component {
   }
 
   switchPlaylistItem_(event) {
-    this.player_.playlist.currentItem(indexOf(this.player_.playlist(), this.item));
+    let oldIndex = this.player_.playlist.currentIndex();
+    let newIndex = indexOf(this.player_.playlist(), this.item);
+    if (oldIndex != newIndex) {
+      this.player_.trigger('playlistitem_changed');
+    }
+
+    this.player_.playlist.currentItem(newIndex);
     if (this.playOnSelect) {
       this.player_.play();
     }
-    this.player_.trigger('currentitem_changed');
+    this.player_.trigger('playlistitem_selected');
   }
 
   addPlayIcon_() {
