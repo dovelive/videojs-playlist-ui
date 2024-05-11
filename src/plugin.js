@@ -26,6 +26,7 @@ const supportsCssPointerEvents = (() => {
 const defaults = {
   className: 'vjs-playlist',
   playOnSelect: false,
+  isVideogInnerPlaylist: false,
   supportsCssPointerEvents
 };
 
@@ -118,8 +119,10 @@ class PlaylistMenuItem extends Component {
     this.on(['click', 'tap'], this.switchPlaylistItem_);
     this.on('keydown', this.handleKeyDown_);
 
-    this.on(['focus', 'mouseover'], this.addPlayIcon_);
-    this.on(['blur', 'mouseout'], this.removePlayIcon_);
+    if (settings.isVideogInnerPlaylist) {
+      this.on(['focus', 'mouseover'], this.addPlayIcon_);
+      this.on(['blur', 'mouseout'], this.removePlayIcon_);
+    }
   }
 
   handleKeyDown_(event) {
@@ -286,7 +289,8 @@ class PlaylistMenu extends Component {
 
     this.on('dispose', () => {
       this.empty_();
-      player.playlistMenu = null;
+
+      player.playlistMenus = null;
     });
 
     this.on(player, 'dispose', () => {
@@ -426,14 +430,14 @@ const hasChildEls = (el) => {
 /**
  * Finds the first empty root element.
  *
- * @param  {string} className
+ * @param  {string} selector
  *         An HTML class name to search for.
  *
  * @return {HTMLElement}
  *         A DOM element to use as the root for a playlist.
  */
-const findRoot = (className) => {
-  const all = document.querySelectorAll('.' + className);
+const findRoot = (selector) => {
+  const all = document.querySelectorAll(selector);
   let el;
 
   for (let i = 0; i < all.length; i++) {
@@ -455,8 +459,14 @@ const findRoot = (className) => {
  * @param  {HTMLElement} [options.el]
  *         A DOM element to use as a root node for the playlist.
  *
+ * @param  {string} [options.id]
+ *         Identification of HTML element to use to find a root node for the playlist.
+ *
  * @param  {string} [options.className]
  *         An HTML class name to use to find a root node for the playlist.
+ *
+ * @param  {boolean} [options.isVideogInnerPlaylist = false]
+ *         If true, do extra actions for playlist item (e.g. show play icon on mouse hover)
  *
  * @param  {boolean} [options.playOnSelect = false]
  *         If true, will attempt to begin playback upon selecting a new
@@ -468,7 +478,6 @@ const playlistUi = function(options) {
   if (!player.playlist) {
     throw new Error('videojs-playlist plugin is required by the videojs-playlist-ui plugin');
   }
-
   if (dom.isEl(options)) {
     videojs.log.warn('videojs-playlist-ui: Passing an element directly to playlistUi() is deprecated, use the "el" option instead!');
     options = {el: options};
@@ -476,11 +485,27 @@ const playlistUi = function(options) {
 
   options = videojs.mergeOptions(defaults, options);
 
+  if (!player.playlistMenus)
+    player.playlistMenus = {};
+
+  let playlistId = null;
+  if (options.el)
+    playlistId = options.el.id;
+  else if (options.id)
+    playlistId = options.id;
+  else if (options.className)
+    playlistId = options.className;
+
+  if (!playlistId) {
+    throw new Error('id or className option should be specified.');
+  }
+
   // If the player is already using this plugin, remove the pre-existing
   // PlaylistMenu, but retain the element and its location in the DOM because
   // it will be re-used.
-  if (player.playlistMenu) {
-    const el = player.playlistMenu.el();
+  if (player.playlistMenus[playlistId]) {
+    let currentPlaylistMenu = player.playlistMenus[playlistId]
+    const el = currentPlaylistMenu.el();
 
     // Catch cases where the menu may have been disposed elsewhere or the
     // element removed from the DOM.
@@ -490,7 +515,7 @@ const playlistUi = function(options) {
 
       // Disposing the menu will remove `el` from the DOM, but we need to
       // empty it ourselves to be sure.
-      player.playlistMenu.dispose();
+      currentPlaylistMenu.dispose();
       dom.emptyEl(el);
 
       // Put the element back in its place.
@@ -505,10 +530,17 @@ const playlistUi = function(options) {
   }
 
   if (!dom.isEl(options.el)) {
-    options.el = findRoot(options.className);
+    if (options.id) {
+      options.el = document.getElementById(options.id);
+    } else {
+      if (options.isVideogInnerPlaylist)
+        options.el = findRoot('#' + player.id() + ' .' + options.className);
+      else
+        options.el = findRoot('.' + options.className);
+    }
   }
 
-  player.playlistMenu = new PlaylistMenu(player, options);
+  player.playlistMenus[playlistId] = new PlaylistMenu(player, options);
 };
 
 // register components
